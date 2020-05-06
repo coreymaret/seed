@@ -127,13 +127,6 @@ function fonts() {
     .pipe(browserSync.stream());
 };
 
-// Push to GitHub Repository
-function github() {
-    return gulp
-    .src("./src/**/*")
-    .pipe(deploy());
-};
-
 
 // -------------------------------------------------------------------------
 // WATCH
