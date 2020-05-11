@@ -2,17 +2,19 @@
   "name": "seed",
   "version": "1.0.0",
   "description": "",
-  "main": "index.html",
-  "scripts": {
-    "deploy": "gh-pages -d dist"
-  },
+  "main": "./src/pages/index.html",
+  "scripts": {},
   "author": "Corey Maret",
   "license": "ISC",
   "homepage": "https://coreymaret.github.io/seed",
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
     "browser-sync": "^2.26.7",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
+    "gulp-babel": "^8.0.0",
     "gulp-changed": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",

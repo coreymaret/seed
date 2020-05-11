@@ -3,29 +3,31 @@
 // -------------------------------------------------------------------------
 
 // Include Gulp and API
-const gulp = require('gulp'),
-    {series, parallel} = require('gulp');
+const   gulp = require('gulp'),
+        {series, parallel} = require('gulp');
 
 // General Plugins
-const browserSync = require('browser-sync').create(),
-    changed = require('gulp-changed');
+const   browserSync = require('browser-sync').create(),
+        changed = require('gulp-changed');
 
 // HTML Plugins
-const htmlmin = require('gulp-htmlmin');
+const   htmlmin = require('gulp-htmlmin');
 
 // CSS Plugins
-const sourcemaps = require('gulp-sourcemaps'),
-    plumber = require('gulp-plumber'),
-    sass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    rename = require('gulp-rename');
+const   sourcemaps = require('gulp-sourcemaps'),
+        plumber = require('gulp-plumber'),
+        sass = require('gulp-sass'),
+        autoprefixer = require('gulp-autoprefixer'),
+        rename = require('gulp-rename');
 
 // JS Plugins
-const uglify = require('gulp-uglify'),
-      concat = require('gulp-concat');
+const   uglify = require('gulp-uglify'),
+        concat = require('gulp-concat'),
+        babel = require('gulp-babel');
+
 
 // Image Plugins
-const imagemin = require('gulp-imagemin');
+const   imagemin = require('gulp-imagemin');
 
 
 // -------------------------------------------------------------------------
@@ -35,7 +37,7 @@ const imagemin = require('gulp-imagemin');
 const paths = {
     html: {
         src: './src/pages/*.html',
-        dest: './dist/pages/'
+        dest: './dist/'
     },
     style: {
         src: './src/assets/scss/*.scss',
@@ -66,7 +68,7 @@ const paths = {
 // -------------------------------------------------------------------------
 
 // HTML Task
-function html() {
+html = () => {
     return gulp
         .src(paths.html.src)
         .pipe(htmlmin({collapseWhitespace: true}))
@@ -75,7 +77,7 @@ function html() {
 };
 
 // CSS Task
-function style() {
+style = () => {
     return gulp
         .src(paths.style.src, {sourcemaps: true})
         .pipe(sourcemaps.init())
@@ -89,11 +91,12 @@ function style() {
 };
 
 // JS Task
-function scripts() {
+scripts = () => {
     return gulp
         .src(paths.js.src, {sourcemaps: true})
         .pipe(plumber())
         .pipe(sourcemaps.init())
+        .pipe(babel())
         .pipe(concat(paths.js.location))
         .pipe(uglify())
         .pipe(sourcemaps.write('./'))
@@ -102,7 +105,7 @@ function scripts() {
 };
 
 // Images Task
-function images() {
+images = () => {
     return gulp
         .src(paths.img.src)
         .pipe(changed(paths.img.dest))
@@ -112,19 +115,19 @@ function images() {
 };
 
 // Videos Task
-function video() {
+video = () => {
     return gulp
-    .src(paths.video.src)
-    .pipe(gulp.dest(paths.video.dest))
-    .pipe(browserSync.stream());
+        .src(paths.video.src)
+        .pipe(gulp.dest(paths.video.dest))
+        .pipe(browserSync.stream());
 };
 
 // Fonts Task
-function fonts() {
+fonts = () => {
     return gulp
-    .src(paths.fonts.src)
-    .pipe(gulp.dest(paths.fonts.dest))
-    .pipe(browserSync.stream());
+        .src(paths.fonts.src)
+        .pipe(gulp.dest(paths.fonts.dest))
+        .pipe(browserSync.stream());
 };
 
 
@@ -133,11 +136,11 @@ function fonts() {
 // -------------------------------------------------------------------------
 
 // Initialize Watcher
-function watch (){
+watch = () => {
     browserSync.init({
         server:{
             baseDir: './',
-            index: "dist/pages/index.html"
+            index: "src/pages/index.html"
         }
     });
     gulp.watch(paths.html.src, html);
